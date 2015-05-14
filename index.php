@@ -13,7 +13,7 @@
 	12/04/24		スクリプトをHTTPサーバのルートに置いていない時の動作を改善しました(R.Hotta)
 	13/11/05		ファイルサイズ、ファイル日時を出力するように変更、不具合の修正(R.Hotta)
 	14/01/27		フォルダ名に'などの特殊文字があると正しく動作しない問題を修正(R.Hotta)
-	
+	15/05/14		くろきさんご指摘部分を修正（path未指定時のPHP警告抑制）	(R.hotta)	
  */
 ?>
 
@@ -53,17 +53,21 @@
 
 
 <?php
-	 $path = $_GET['path'];
-	
-	 if ($path=="") {$path="./";}
-	 $path = stripcslashes($path);
-	 //ディレクトリトラバーサルを防止
-	 $realpath = realpath($path);
-	 $bookpath = realpath("./");
-	 if(strpos($realpath, $bookpath, 0) !== 0)
-	 {
-	 	$path="./";
-	 }
+	if ( $_GET['path'] == null ) {
+	    $path ="./";
+	}
+	else {
+	    $path = $_GET['path'];
+	}
+	if ($path=="") {$path="./";}
+	$path = stripcslashes($path);
+	//ディレクトリトラバーサルを防止
+	$realpath = realpath($path);
+	$bookpath = realpath("./");
+	if(strpos($realpath, $bookpath, 0) !== 0)
+	{
+		$path="./";
+	}
 
 ?>
 <html>
