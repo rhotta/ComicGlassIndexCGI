@@ -53,7 +53,7 @@
 
 
 <?php
-	if ( $_GET['path'] == null ) {
+	if ( !isset($_GET['path'] )) {
 	    $path ="./";
 	}
 	else {
