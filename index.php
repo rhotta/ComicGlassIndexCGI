@@ -14,6 +14,7 @@
 	13/11/05		ファイルサイズ、ファイル日時を出力するように変更、不具合の修正(R.Hotta)
 	14/01/27		フォルダ名に'などの特殊文字があると正しく動作しない問題を修正(R.Hotta)
 	15/05/14		くろきさんご指摘部分を修正（path未指定時のPHP警告抑制）	(R.hotta)	
+	16/09/01		PHP7 Compatibility (M.Cafe)
  */
 ?>
 
@@ -104,7 +105,7 @@
 		
 		$filedate = filemtime($fullpathraw);
 		$scriptdir = dirname($_SERVER['SCRIPT_NAME']);
-		if(eregi('/$',$scriptdir)){
+		if(preg_match('/$/',$scriptdir)){
 			$filebasepath = $scriptdir  . $fullpath;
 		}else{
 		
@@ -123,8 +124,8 @@
 		} elseif (substr($entry,0,1) == ".") {
 
 		//表示する拡張子
-		} elseif (eregi(
-		'\.gif$|\.png$|\.jpg$|\.jpeg$|\.tif$|\.tiff$|\.zip$|\.rar$|\.cbz$|\.cbr$|\.bmp$|\.pdf$|\.cgt$'
+		} elseif (preg_match(
+		'/\.gif$|\.png$|\.jpg$|\.jpeg$|\.tif$|\.tiff$|\.zip$|\.rar$|\.cbz$|\.cbr$|\.bmp$|\.pdf$|\.cgt$/'
 		,$entry)) {
 			$filesize = filesize($fullpathraw);
 			echo "<li><a href=\"".$filebasepath."\"";
